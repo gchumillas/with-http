@@ -1,9 +1,12 @@
+// @flow
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import styles from './styles.css'
 
-export default class ExampleComponent extends Component {
+export default class ExampleComponent extends Component<{
+  text: string
+}> {
   static propTypes = {
     text: PropTypes.string
   }
