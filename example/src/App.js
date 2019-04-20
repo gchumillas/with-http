@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <div>
         <HttpRequest>
-        {({http}) => {
+        {({ http }) => {
           return (
             <div className={classes.container}>
               <Table>
