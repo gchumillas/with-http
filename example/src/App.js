@@ -20,14 +20,14 @@ class App extends Component {
   }
 
   componentDidMount = async () => {
-    const { http } = this.props;
+    const { http } = this.props
 
     const doc = await http.get(USERS_CONTROLLER)
     this.setState({ items: doc.data })
   }
 
   handleSubmit = (http) => {
-    console.log(http);
+    console.log(http)
   }
 
   render () {
@@ -46,7 +46,7 @@ class App extends Component {
           <TableBody>
             <TableRow>
               <TableCell>
-                <TextField label="Enter full name" />
+                <TextField label={'Full name'} />
               </TableCell>
               <TableCell className={classes.lastColumn}>
                 <IconButton>
@@ -60,7 +60,7 @@ class App extends Component {
                   <TableCell>
                     <TextField value={item.name} />
                   </TableCell>
-                  <TableCell  className={classes.lastColumn}>
+                  <TableCell className={classes.lastColumn}>
                     <IconButton>
                       <Save />
                     </IconButton>
@@ -69,7 +69,8 @@ class App extends Component {
                     </IconButton>
                   </TableCell>
                 </TableRow>
-              )})}
+              )
+            })}
           </TableBody>
         </Table>
       </div>
@@ -79,13 +80,13 @@ class App extends Component {
 
 const styles = theme => {
   return {
-      container: {
-        margin: '0 auto',
-        maxWidth: 500
-      },
-      lastColumn: {
-        textAlign: 'right'
-      }
+    container: {
+      margin: '0 auto',
+      maxWidth: 500
+    },
+    lastColumn: {
+      textAlign: 'right'
+    }
   }
 }
 
