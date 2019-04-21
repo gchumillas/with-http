@@ -1,25 +1,26 @@
 // @flow
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
+import axios, { type $AxiosXHR } from 'axios'
 
-import styles from './styles.css'
+export interface HttpClient {
+  get<T>(url: string): Promise<$AxiosXHR<T>>;
+}
 
-export default class ExampleComponent extends Component<{
-  text: string
-}> {
-  static propTypes = {
-    text: PropTypes.string
-  }
+export default function withHttp<P>(Component: React$ComponentType<P>) {
+  return class extends React.Component<P> implements HttpClient {
+    request<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
+      return axios({
+        url,
+        ...config
+      })
+    }
 
-  render() {
-    const {
-      text
-    } = this.props
+    get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
+      return this.request(url, config)
+    }
 
-    return (
-      <div className={styles.test}>
-        Example Component: {text}
-      </div>
-    )
+    render() {
+      return <Component http={this} {...this.props} />
+    }
   }
 }

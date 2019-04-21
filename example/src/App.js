@@ -8,47 +8,70 @@ import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import IconButton from '@material-ui/core/IconButton'
 import AddCircle from '@material-ui/icons/AddCircle'
+import Save from '@material-ui/icons/Save'
+import Delete from '@material-ui/icons/Delete'
 
-import HttpRequest from 'react-http-request'
+import withHttp from 'react-http-request'
 
 class App extends Component {
+  state = {
+    items: []
+  }
+
+  componentDidMount = () => {
+    const { http } = this.props;
+
+    http.get('http://localhost:3030/user').then(doc => {
+      this.setState({ items: doc.data })
+    })
+  }
+
   handleSubmit = (http) => {
     console.log(http);
   }
 
   render () {
-    const { classes } = this.props;
+    const { classes, http } = this.props
+    const { items } = this.state
 
     return (
-      <div>
-        <HttpRequest>
-        {({ http }) => {
-          return (
-            <div className={classes.container}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <TextField label="Enter full name" />
-                    </TableCell>
-                    <TableCell>
-                      <IconButton>
-                        <AddCircle />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </div>
-          )
-        }}
-        </HttpRequest>
+      <div className={classes.container}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <TextField label="Enter full name" />
+              </TableCell>
+              <TableCell>
+                <IconButton>
+                  <AddCircle />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+            {items.map((item, key) => {
+              return (
+                <TableRow key={key}>
+                  <TableCell>
+                    <TextField value={item.name} />
+                  </TableCell>
+                  <TableCell>
+                    <IconButton>
+                      <Save />
+                    </IconButton>
+                    <IconButton>
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              )})}
+          </TableBody>
+        </Table>
       </div>
     )
   }
@@ -63,4 +86,4 @@ const styles = theme => {
   }
 }
 
-export default withStyles(styles)(App)
+export default withHttp(withStyles(styles)(App))
