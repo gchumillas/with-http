@@ -6,8 +6,7 @@ module.exports = function () {
         user: _.times(10, function (n) {
             return {
                 id: n,
-                name: faker.name.findName(),
-                avatar: faker.internet.avatar()
+                name: faker.name.findName()
             }
         })
     }
