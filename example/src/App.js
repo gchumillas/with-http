@@ -10,20 +10,20 @@ import IconButton from '@material-ui/core/IconButton'
 import AddCircle from '@material-ui/icons/AddCircle'
 import Save from '@material-ui/icons/Save'
 import Delete from '@material-ui/icons/Delete'
-
 import withHttp from 'react-http-request'
+
+import { USERS_CONTROLLER } from './config'
 
 class App extends Component {
   state = {
     items: []
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { http } = this.props;
 
-    http.get('http://localhost:3030/user').then(doc => {
-      this.setState({ items: doc.data })
-    })
+    const doc = await http.get(USERS_CONTROLLER)
+    this.setState({ items: doc.data })
   }
 
   handleSubmit = (http) => {
@@ -31,7 +31,7 @@ class App extends Component {
   }
 
   render () {
-    const { classes, http } = this.props
+    const { classes } = this.props
     const { items } = this.state
 
     return (
@@ -48,7 +48,7 @@ class App extends Component {
               <TableCell>
                 <TextField label="Enter full name" />
               </TableCell>
-              <TableCell>
+              <TableCell className={classes.lastColumn}>
                 <IconButton>
                   <AddCircle />
                 </IconButton>
@@ -60,7 +60,7 @@ class App extends Component {
                   <TableCell>
                     <TextField value={item.name} />
                   </TableCell>
-                  <TableCell>
+                  <TableCell  className={classes.lastColumn}>
                     <IconButton>
                       <Save />
                     </IconButton>
@@ -82,6 +82,9 @@ const styles = theme => {
       container: {
         margin: '0 auto',
         maxWidth: 500
+      },
+      lastColumn: {
+        textAlign: 'right'
       }
   }
 }
