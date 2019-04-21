@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import 'regenerator-runtime/runtime'
 import axios, { type $AxiosXHR } from 'axios'
 
 export interface HttpClient {
