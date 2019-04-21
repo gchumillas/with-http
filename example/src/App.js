@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Table from '@material-ui/core/Table'
@@ -15,6 +16,11 @@ import withHttp from 'react-http-request'
 import { USERS_CONTROLLER } from './config'
 
 class App extends Component {
+  static propTypes = {
+    http: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
+  }
+
   state = {
     items: []
   }
