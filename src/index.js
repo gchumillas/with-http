@@ -3,7 +3,8 @@ import React from 'react'
 import axios, { type $AxiosXHR } from 'axios'
 import 'regenerator-runtime/runtime'
 
-const HTTP_SUCCESS = 200
+const HTTP_SUCCESS = { status: 200, statusText: '' }
+const HTTP_SERVER_ERROR = { status: 500, statusText: 'Internal Server Error' }
 
 export interface HttpClient {
   get<T>(url: string): Promise<$AxiosXHR<T>>;
@@ -17,8 +18,7 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
   }> implements HttpClient {
     state = {
       isPending: false,
-      status: HTTP_SUCCESS,
-      statusText: ''
+      ...HTTP_SUCCESS
     }
 
     // TODO: axios is not using the generic type 'T'
@@ -30,11 +30,11 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
     }
 
     async get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
-      this.setState({ isPending: true, status: HTTP_SUCCESS, statusText: '' })
+      this.setState({ isPending: true, ...HTTP_SUCCESS })
       try {
         return await this.request(url, config)
       } catch (err) {
-        const { status, statusText } = err.response
+        const { status, statusText } = err.response || HTTP_SERVER_ERROR
 
         this.setState({ status, statusText })
         throw err
