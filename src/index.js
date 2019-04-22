@@ -40,28 +40,28 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
     }
 
     // TODO: test this method
-    async request<T>(config: {}): Promise<$AxiosXHR<T>> {
+    request<T>(config: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios, config)
     }
 
-    async get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
+    get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios.get, url, config)
     }
 
-    async post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
+    post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios.post, url, data, config)
     }
 
-    async put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
+    put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios.put, url, data, config)
     }
 
     // TODO: test this method
-    async patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
+    patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios.patch, url, data, config)
     }
 
-    async delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
+    delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios.delete, url, config)
     }
 
@@ -70,10 +70,11 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
       try {
         return await method(...params)
       } catch (err) {
-        const { status, statusText } = err.response || HTTP_SERVER_ERROR
+        const response = err.response
+        const { status, statusText } = response || HTTP_SERVER_ERROR
 
         this.setState({ status, statusText })
-        throw err
+        throw response
       } finally {
         this.setState({ isPending: false })
       }
