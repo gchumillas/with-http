@@ -21,9 +21,9 @@ import { USERS_CONTROLLER } from './config'
 
 class App extends Component {
   state = {
+    isError: false,
     fullname: '',
-    items: [],
-    status: 200
+    items: []
   }
 
   componentDidMount = async () => {
@@ -34,10 +34,10 @@ class App extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    const { status } = this.props
+    const { isError } = this.props
 
-    if (prevProps.status !== status) {
-      this.setState({ status })
+    if (prevProps.isError !== isError) {
+      this.setState({ isError })
     }
   }
 
@@ -94,12 +94,12 @@ class App extends Component {
   }
 
   handleClose = () => {
-    this.setState({ status: 200 })
+    this.setState({ isError: false })
   }
 
   render () {
     const { classes, isPending, statusText } = this.props
-    const { fullname, items, status } = this.state
+    const { fullname, items, isError } = this.state
 
     return (
       <div className={classes.container}>
@@ -155,7 +155,7 @@ class App extends Component {
               )
             })}
           </TableBody>
-          <Dialog open={status > 200} onClose={this.handleClose}>
+          <Dialog open={isError} onClose={this.handleClose}>
             <DialogContent>
               <DialogContentText>
                 {statusText}

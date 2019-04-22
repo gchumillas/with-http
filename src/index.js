@@ -18,21 +18,24 @@ export interface HttpClient {
 export default function withHttp<P>(Component: React$ComponentType<P>) {
   return class extends React.Component<P, {
     isPending: boolean,
+    isError: boolean,
     status: number,
     statusText: string
   }> implements HttpClient {
     state = {
       isPending: false,
+      isError: false,
       ...HTTP_SUCCESS
     }
 
     render() {
-      const { isPending, status, statusText } = this.state
+      const { isPending, isError, status, statusText } = this.state
 
       return (
         <Component
           http={this}
           isPending={isPending}
+          isError={isError}
           status={status}
           statusText={statusText}
           {...this.props} />
@@ -64,14 +67,14 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
     }
 
     async _send(method: (...params: any) => any, ...params: any) {
-      this.setState({ isPending: true, ...HTTP_SUCCESS })
+      this.setState({ isPending: true, isError: false, ...HTTP_SUCCESS })
       try {
         return await method(...params)
       } catch (err) {
         const response = err.response
         const { status, statusText } = response || HTTP_SERVER_ERROR
 
-        this.setState({ status, statusText })
+        this.setState({ isError: true, status, statusText })
         throw response
       } finally {
         this.setState({ isPending: false })
