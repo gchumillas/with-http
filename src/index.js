@@ -39,7 +39,6 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
       )
     }
 
-    // TODO: test this method
     request<T>(config: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios, config)
     }
