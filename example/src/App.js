@@ -18,6 +18,7 @@ import { USERS_CONTROLLER } from './config'
 class App extends Component {
   static propTypes = {
     http: PropTypes.object.isRequired,
+    isPending: PropTypes.boolean,
     classes: PropTypes.object.isRequired
   }
 
@@ -85,7 +86,7 @@ class App extends Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, isPending } = this.props
     const { fullname, items } = this.state
 
     return (
@@ -106,7 +107,7 @@ class App extends Component {
                   onChange={this.handleFullnameChange} />
               </TableCell>
               <TableCell className={classes.lastColumn}>
-                <IconButton onClick={this.handleAdd}>
+                <IconButton disabled={isPending} onClick={this.handleAdd}>
                   <AddCircle />
                 </IconButton>
               </TableCell>
@@ -118,10 +119,10 @@ class App extends Component {
                     <TextField value={item.name} onChange={this.handleInputChange(item.id)} />
                   </TableCell>
                   <TableCell className={classes.lastColumn}>
-                    <IconButton onClick={this.handleSave(item.id)}>
+                    <IconButton disabled={isPending} onClick={this.handleSave(item.id)}>
                       <Save />
                     </IconButton>
-                    <IconButton onClick={this.handleDelete(item.id)}>
+                    <IconButton disabled={isPending} onClick={this.handleDelete(item.id)}>
                       <Delete />
                     </IconButton>
                   </TableCell>
