@@ -75,6 +75,15 @@ class App extends Component {
     this.setState({ items: doc.data })
   }
 
+  handleDelete = key => async () => {
+    const { http } = this.props
+
+    await http.delete(`${USERS_CONTROLLER}/${key}`)
+
+    const doc = await http.get(USERS_CONTROLLER)
+    this.setState({ items: doc.data })
+  }
+
   render () {
     const { classes } = this.props
     const { fullname, items } = this.state
@@ -112,7 +121,7 @@ class App extends Component {
                     <IconButton onClick={this.handleSave(key)}>
                       <Save />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={this.handleDelete(key)}>
                       <Delete />
                     </IconButton>
                   </TableCell>
