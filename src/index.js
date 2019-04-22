@@ -39,6 +39,7 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
       )
     }
 
+    // TODO: test this method
     async request<T>(config: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios, config)
     }
@@ -55,6 +56,7 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
       return this._send(axios.put, url, data, config)
     }
 
+    // TODO: test this method
     async patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
       return this._send(axios.patch, url, data, config)
     }
