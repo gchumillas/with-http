@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save react-http-request
+yarn add react-http-request
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install --save react-http-request
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-http-request'
+import withHttp from 'react-http-request'
 
 class Example extends Component {
   render () {
@@ -24,6 +24,8 @@ class Example extends Component {
     )
   }
 }
+
+export default withHttp(Example)
 ```
 
 ## License
