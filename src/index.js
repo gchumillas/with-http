@@ -7,6 +7,7 @@ const HTTP_SUCCESS = { status: 200, statusText: '' }
 const HTTP_SERVER_ERROR = { status: 500, statusText: 'Internal Server Error' }
 
 export interface HttpClient {
+  request<T>(config: {}): Promise<$AxiosXHR<T>>;
   get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
   post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
   put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
@@ -36,6 +37,10 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
           statusText={statusText}
           {...this.props} />
       )
+    }
+
+    async request<T>(config: {}): Promise<$AxiosXHR<T>> {
+      return this._send(axios, config)
     }
 
     async get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
