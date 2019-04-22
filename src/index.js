@@ -25,6 +25,19 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
       ...HTTP_SUCCESS
     }
 
+    render() {
+      const { isPending, status, statusText } = this.state
+
+      return (
+        <Component
+          http={this}
+          isPending={isPending}
+          status={status}
+          statusText={statusText}
+          {...this.props} />
+      )
+    }
+
     async get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
       return this.request(axios.get, url, config)
     }
@@ -57,19 +70,6 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
       } finally {
         this.setState({ isPending: false })
       }
-    }
-
-    render() {
-      const { isPending, status, statusText } = this.state
-
-      return (
-        <Component
-          http={this}
-          isPending={isPending}
-          status={status}
-          statusText={statusText}
-          {...this.props} />
-      )
     }
   }
 }
