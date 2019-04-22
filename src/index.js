@@ -22,17 +22,10 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
       ...HTTP_SUCCESS
     }
 
-    request<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
-      return axios({
-        url,
-        ...config
-      })
-    }
-
     async get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
       this.setState({ isPending: true, ...HTTP_SUCCESS })
       try {
-        return await this.request(url, config)
+        return await axios.get(url, config)
       } catch (err) {
         const { status, statusText } = err.response || HTTP_SERVER_ERROR
 
