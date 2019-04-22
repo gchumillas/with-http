@@ -40,7 +40,7 @@ class App extends Component {
     this.setState({ fullname: value })
   }
 
-  handleInputChange = (key) => (event) => {
+  handleInputChange = key => (event) => {
     const target = event.target
     const value = target.value
     const items = [...this.state.items]
@@ -61,6 +61,12 @@ class App extends Component {
     this.setState({ items: doc.data })
 
     this.setState({ fullname: '' })
+  }
+
+  handleSave = key => async () => {
+    const { http } = this.props
+
+    console.log(key)
   }
 
   render () {
@@ -97,7 +103,7 @@ class App extends Component {
                     <TextField value={item.name} onChange={this.handleInputChange(key)} />
                   </TableCell>
                   <TableCell className={classes.lastColumn}>
-                    <IconButton>
+                    <IconButton onClick={this.handleSave(key)}>
                       <Save />
                     </IconButton>
                     <IconButton>
