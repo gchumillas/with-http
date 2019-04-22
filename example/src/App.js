@@ -6,10 +6,15 @@ import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
+import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import AddCircle from '@material-ui/icons/AddCircle'
 import Save from '@material-ui/icons/Save'
 import Delete from '@material-ui/icons/Delete'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
 import withHttp from 'react-http-request'
 
 import { USERS_CONTROLLER } from './config'
@@ -17,7 +22,8 @@ import { USERS_CONTROLLER } from './config'
 class App extends Component {
   state = {
     fullname: '',
-    items: []
+    items: [],
+    status: 200
   }
 
   componentDidMount = async () => {
@@ -25,6 +31,14 @@ class App extends Component {
 
     const doc = await http.get(USERS_CONTROLLER)
     this.setState({ items: doc.data })
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { status } = this.props
+
+    if (prevProps.status !== status) {
+      this.setState({ status })
+    }
   }
 
   handleFullnameChange = (event) => {
@@ -59,7 +73,8 @@ class App extends Component {
 
   handleSave = key => async () => {
     const { http } = this.props
-    const value = this.state.items[key].name
+    const item = this.state.items[key]
+    const value = item ? item.name : ''
 
     await http.put(`${USERS_CONTROLLER}/${key}`, {
       name: value
@@ -78,9 +93,13 @@ class App extends Component {
     this.setState({ items: doc.data })
   }
 
+  handleClose = () => {
+    this.setState({ status: 200 })
+  }
+
   render () {
     const { classes, isPending } = this.props
-    const { fullname, items } = this.state
+    const { fullname, items, status } = this.state
 
     return (
       <div className={classes.container}>
@@ -105,6 +124,19 @@ class App extends Component {
                 </IconButton>
               </TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell>
+                <TextField value={'I\'M A FAKE ROW !!!'} />
+              </TableCell>
+              <TableCell className={classes.lastColumn}>
+                <IconButton disabled={isPending} onClick={this.handleSave(-1)}>
+                  <Save style={{ color: 'brown' }} />
+                </IconButton>
+                <IconButton disabled={isPending} onClick={this.handleDelete(-1)}>
+                  <Delete style={{ color: 'brown' }} />
+                </IconButton>
+              </TableCell>
+            </TableRow>
             {items.map((item, key) => {
               return (
                 <TableRow key={key}>
@@ -123,6 +155,18 @@ class App extends Component {
               )
             })}
           </TableBody>
+          <Dialog open={status > 200} onClose={this.handleClose}>
+            <DialogContent>
+              <DialogContentText>
+                An error has occurred!
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} autoFocus>
+                Accept
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Table>
       </div>
     )
