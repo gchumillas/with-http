@@ -9,6 +9,7 @@ const HTTP_SERVER_ERROR = { status: 500, statusText: 'Internal Server Error' }
 export interface HttpClient {
   get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
   post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
+  put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
 }
 
 export default function withHttp<P>(Component: React$ComponentType<P>) {
@@ -28,6 +29,10 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
 
     async post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
       return this.request(axios.post, url, data, config)
+    }
+
+    async put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
+      return this.request(axios.put, url, data, config)
     }
 
     async request(method: (...params: any) => any, ...params: any) {
