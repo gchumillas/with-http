@@ -49,8 +49,18 @@ class App extends Component {
     this.setState({ items })
   }
 
-  handleSubmit = (http) => {
-    console.log(http)
+  handleAdd = async () => {
+    const { http } = this.props
+    const { fullname } = this.state
+
+    await http.post(USERS_CONTROLLER, {
+      name: fullname
+    })
+
+    const doc = await http.get(USERS_CONTROLLER)
+    this.setState({ items: doc.data })
+
+    this.setState({ fullname: '' })
   }
 
   render () {
@@ -75,7 +85,7 @@ class App extends Component {
                   onChange={this.handleFullnameChange} />
               </TableCell>
               <TableCell className={classes.lastColumn}>
-                <IconButton>
+                <IconButton onClick={this.handleAdd}>
                   <AddCircle />
                 </IconButton>
               </TableCell>
