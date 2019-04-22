@@ -26,6 +26,10 @@ class App extends Component {
     items: []
   }
 
+  messages = {
+    404: 'Record not found'
+  }
+
   componentDidMount = async () => {
     const { http } = this.props
 
@@ -98,8 +102,9 @@ class App extends Component {
   }
 
   render () {
-    const { classes, isPending, statusText } = this.props
+    const { classes, isPending, status, statusText } = this.props
     const { fullname, items, isError } = this.state
+    const errorMsg = this.messages[status] || statusText
 
     return (
       <div className={classes.container}>
@@ -158,7 +163,7 @@ class App extends Component {
           <Dialog open={isError} onClose={this.handleClose}>
             <DialogContent>
               <DialogContentText>
-                {statusText}
+                {errorMsg}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
