@@ -115,13 +115,13 @@ class App extends Component {
               return (
                 <TableRow key={key}>
                   <TableCell>
-                    <TextField value={item.name} onChange={this.handleInputChange(key)} />
+                    <TextField value={item.name} onChange={this.handleInputChange(item.id)} />
                   </TableCell>
                   <TableCell className={classes.lastColumn}>
-                    <IconButton onClick={this.handleSave(key)}>
+                    <IconButton onClick={this.handleSave(item.id)}>
                       <Save />
                     </IconButton>
-                    <IconButton onClick={this.handleDelete(key)}>
+                    <IconButton onClick={this.handleDelete(item.id)}>
                       <Delete />
                     </IconButton>
                   </TableCell>
