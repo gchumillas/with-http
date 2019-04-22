@@ -65,8 +65,14 @@ class App extends Component {
 
   handleSave = key => async () => {
     const { http } = this.props
+    const value = this.state.items[key].name
 
-    console.log(key)
+    await http.put(`${USERS_CONTROLLER}/${key}`, {
+      name: value
+    })
+
+    const doc = await http.get(USERS_CONTROLLER)
+    this.setState({ items: doc.data })
   }
 
   render () {
