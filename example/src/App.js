@@ -22,6 +22,7 @@ class App extends Component {
   }
 
   state = {
+    fullname: '',
     items: []
   }
 
@@ -32,13 +33,29 @@ class App extends Component {
     this.setState({ items: doc.data })
   }
 
+  handleFullnameChange = (event) => {
+    const target = event.target
+    const value = target.value
+
+    this.setState({ fullname: value })
+  }
+
+  handleInputChange = (key) => (event) => {
+    const target = event.target
+    const value = target.value
+    const items = [...this.state.items]
+
+    items[key].name = value
+    this.setState({ items })
+  }
+
   handleSubmit = (http) => {
     console.log(http)
   }
 
   render () {
     const { classes } = this.props
-    const { items } = this.state
+    const { fullname, items } = this.state
 
     return (
       <div className={classes.container}>
@@ -52,7 +69,10 @@ class App extends Component {
           <TableBody>
             <TableRow>
               <TableCell>
-                <TextField label={'Full name'} />
+                <TextField
+                  label={'Full name'}
+                  value={fullname}
+                  onChange={this.handleFullnameChange} />
               </TableCell>
               <TableCell className={classes.lastColumn}>
                 <IconButton>
@@ -64,7 +84,9 @@ class App extends Component {
               return (
                 <TableRow key={key}>
                   <TableCell>
-                    <TextField value={item.name} />
+                    <TextField
+                      value={item.name}
+                      onChange={this.handleInputChange(key)} />
                   </TableCell>
                   <TableCell className={classes.lastColumn}>
                     <IconButton>
