@@ -21,7 +21,6 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
       ...HTTP_SUCCESS
     }
 
-    // TODO: axios is not using the generic type 'T'
     request<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
       return axios({
         url,
