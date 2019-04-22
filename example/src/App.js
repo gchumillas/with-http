@@ -98,7 +98,7 @@ class App extends Component {
   }
 
   render () {
-    const { classes, isPending } = this.props
+    const { classes, isPending, statusText } = this.props
     const { fullname, items, status } = this.state
 
     return (
@@ -158,7 +158,7 @@ class App extends Component {
           <Dialog open={status > 200} onClose={this.handleClose}>
             <DialogContent>
               <DialogContentText>
-                An error has occurred!
+                {statusText}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
