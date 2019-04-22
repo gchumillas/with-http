@@ -11,6 +11,7 @@ export interface HttpClient {
   post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
   put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
   patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
+  delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
 }
 
 export default function withHttp<P>(Component: React$ComponentType<P>) {
@@ -38,6 +39,10 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
 
     async patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
       return this.request(axios.patch, url, data, config)
+    }
+
+    async delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
+      return this.request(axios.delete, url, config)
     }
 
     async request(method: (...params: any) => any, ...params: any) {
