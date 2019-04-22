@@ -39,26 +39,26 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
     }
 
     async get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
-      return this.request(axios.get, url, config)
+      return this._send(axios.get, url, config)
     }
 
     async post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
-      return this.request(axios.post, url, data, config)
+      return this._send(axios.post, url, data, config)
     }
 
     async put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
-      return this.request(axios.put, url, data, config)
+      return this._send(axios.put, url, data, config)
     }
 
     async patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
-      return this.request(axios.patch, url, data, config)
+      return this._send(axios.patch, url, data, config)
     }
 
     async delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
-      return this.request(axios.delete, url, config)
+      return this._send(axios.delete, url, config)
     }
 
-    async request(method: (...params: any) => any, ...params: any) {
+    async _send(method: (...params: any) => any, ...params: any) {
       this.setState({ isPending: true, ...HTTP_SUCCESS })
       try {
         return await method(...params)
