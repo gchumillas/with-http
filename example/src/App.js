@@ -26,7 +26,7 @@ class App extends Component {
     items: []
   }
 
-  messages = {
+  errorMessages = {
     404: 'Record not found'
   }
 
@@ -104,7 +104,7 @@ class App extends Component {
   render () {
     const { classes, isPending, status, statusText } = this.props
     const { fullname, items, isError } = this.state
-    const errorMsg = this.messages[status] || statusText
+    const errorMsg = this.errorMessages[status] || statusText
 
     return (
       <div className={classes.container}>
