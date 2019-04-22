@@ -94,9 +94,7 @@ class App extends Component {
               return (
                 <TableRow key={key}>
                   <TableCell>
-                    <TextField
-                      value={item.name}
-                      onChange={this.handleInputChange(key)} />
+                    <TextField value={item.name} onChange={this.handleInputChange(key)} />
                   </TableCell>
                   <TableCell className={classes.lastColumn}>
                     <IconButton>
