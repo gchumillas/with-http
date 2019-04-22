@@ -46,7 +46,7 @@ export default function withHttp<P>(Component: React$ComponentType<P>) {
     async post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
       this.setState({ isPending: true, ...HTTP_SUCCESS })
       try {
-        return axios.post(url, data, config)
+        return await axios.post(url, data, config)
       } catch (err) {
         const { status, statusText } = err.response || HTTP_SERVER_ERROR
 
