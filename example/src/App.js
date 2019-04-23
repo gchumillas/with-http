@@ -53,12 +53,14 @@ class App extends Component {
     this.setState({ fullname: value })
   }
 
-  handleInputChange = key => (event) => {
+  handleInputChange = itemId => (event) => {
     const target = event.target
     const value = target.value
     const items = [...this.state.items]
 
-    items[key].name = value
+    const item = items.find(item => item.id === itemId)
+    item.name = value
+
     this.setState({ items })
   }
 
@@ -76,23 +78,24 @@ class App extends Component {
     this.setState({ fullname: '' })
   }
 
-  handleSave = key => async () => {
+  handleSave = itemId => async () => {
     const { http } = this.props
-    const item = this.state.items[key]
-    const value = item ? item.name : ''
+    const { items } = this.state
+    const item = items.find(item => item.id === itemId)
+    const { name, id } = item || { name: '', id: -1 }
 
-    await http.put(`${USERS_CONTROLLER}/${key}`, {
-      name: value
-    })
+    await http.put(`${USERS_CONTROLLER}/${id}`, { name })
 
     const doc = await http.get(USERS_CONTROLLER)
     this.setState({ items: doc.data })
   }
 
-  handleDelete = key => async () => {
+  handleDelete = itemId => async () => {
     const { http } = this.props
+    const { items } = this.state
+    const item = items.find(item => item.id === itemId)
 
-    await http.delete(`${USERS_CONTROLLER}/${key}`)
+    await http.delete(`${USERS_CONTROLLER}/${item.id}`)
 
     const doc = await http.get(USERS_CONTROLLER)
     this.setState({ items: doc.data })
