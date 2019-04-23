@@ -18,7 +18,7 @@ The component injects the following properties:
 
 ## Motivation
 
-Traditionally, if we want to know the status of an asynchronous HTTP request, we can write something like this:
+Traditionally if we want to know the status of an asynchronous HTTP request, we can write something like this:
 
 ```JavaScript
 this.setState({ isPending: true, isError: false })
