@@ -34,7 +34,7 @@ try {
 }
 ```
 
-But the previous approach could become cumbersome if we have many requests in our code. And most of the time, when a request fails, we simply wat to show an error message to the user.
+But the previous approach could become cumbersome if we have many requests in our code. And most of the time, when a request fails, we simply want to show an error message to the user.
 
 Thanks to this component we can get rid of the redundant code and simply write:
 
