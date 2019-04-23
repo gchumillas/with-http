@@ -13,14 +13,48 @@ yarn add react-http-request
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
-
+import React from 'react'
 import withHttp from 'react-http-request'
 
-class Example extends Component {
+class Example extends React.Component {
+  state = {
+    username: '',
+    password: ''
+  }
+
+  handleInputChange = name => event => {
+    const target = event.target
+    const value = target.value
+
+    this.setState({ [name]: value })
+  }
+
+  handleSubmit = async () => {
+    const { http } = this.props
+    const { username, password } = this.state
+
+    await http.post('http://www.myservice.com/login', { username, password })
+  }
+
   render () {
+    const { isPending, isError, status, statusText } = this.props
+    const { username, password } = this.state
+
     return (
-      <MyComponent />
+      <div>
+        <input
+          type='text'
+          value={username}
+          onChange={this.handleInputChange('username')} />
+        <input
+          type='password'
+          value={password}
+          onChange={this.handleInputChange('password')} />
+        <input type='button' value='Login' disabled={isPending} onClick={this.handleSubmit} />
+        <p hidden={!isError}>
+          Error {status}: {statusText}
+        </p>
+      </div>
     )
   }
 }
