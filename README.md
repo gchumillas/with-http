@@ -101,6 +101,22 @@ export default withHttp(Example)
 
 See the `example` folder for a more detailed usage.
 
+## How to run the example
+
+The example uses [json-server](https://github.com/typicode/json-server) to display a list of 'fake users':
+
+```bash
+# install json-server globally
+yarn global add json-server
+
+# change to the example directory and start the server
+cd example
+yarn start-server
+
+# and finally start the example
+yarn start
+```
+
 ## License
 
 MIT © [gchumillas](https://github.com/gchumillas)
