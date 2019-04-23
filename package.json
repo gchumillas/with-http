@@ -1,10 +1,10 @@
 {
-  "name": "react-http-request",
+  "name": "with-http",
   "version": "1.0.0",
   "description": "A React HTTP component.",
   "author": "gchumillas",
   "license": "MIT",
-  "repository": "gchumillas/react-http-request",
+  "repository": "gchumillas/with-http",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",

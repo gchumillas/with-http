@@ -1,6 +1,6 @@
 {
-  "name": "react-http-request-example",
-  "homepage": "https://gchumillas.github.io/react-http-request",
+  "name": "with-http-example",
+  "homepage": "https://gchumillas.github.io/with-http",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -11,7 +11,7 @@
     "faker": "^4.1.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-http-request": "link:..",
+    "with-http": "link:..",
     "react-scripts": "^1.1.4"
   },
   "scripts": {

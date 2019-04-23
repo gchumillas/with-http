@@ -16,7 +16,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
-import withHttp from 'react-http-request'
+import withHttp from 'with-http'
 
 import { USERS_CONTROLLER } from './config'
 

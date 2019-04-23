@@ -1,20 +1,20 @@
-# react-http-request
+# with-http
 
 > A React HTTP component.
 
-[![NPM](https://img.shields.io/npm/v/react-http-request.svg)](https://www.npmjs.com/package/react-http-request) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/with-http.svg)](https://www.npmjs.com/package/with-http) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-yarn add react-http-request
+yarn add with-http
 ```
 
 ## Usage
 
 ```jsx
 import React from 'react'
-import withHttp from 'react-http-request'
+import withHttp from 'with-http'
 
 class Example extends React.Component {
   state = {
@@ -42,15 +42,12 @@ class Example extends React.Component {
 
     return (
       <div>
-        <input
-          type='text'
-          value={username}
-          onChange={this.handleInputChange('username')} />
-        <input
-          type='password'
-          value={password}
-          onChange={this.handleInputChange('password')} />
-        <input type='button' value='Login' disabled={isPending} onClick={this.handleSubmit} />
+        <input type='text'
+          value={username} onChange={this.handleInputChange('username')} />
+        <input type='password'
+          value={password} onChange={this.handleInputChange('password')} />
+        <input type='button'
+          value='Login' disabled={isPending} onClick={this.handleSubmit} />
         <p hidden={!isError}>
           Error {status}: {statusText}
         </p>

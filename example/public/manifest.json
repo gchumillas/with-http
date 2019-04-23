@@ -1,6 +1,6 @@
 {
-  "short_name": "react-http-request",
-  "name": "react-http-request",
+  "short_name": "with-http",
+  "name": "with-http",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
