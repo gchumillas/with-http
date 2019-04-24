@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
@@ -16,11 +17,22 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
-import withHttp from 'with-http'
+import withHttp, { HttpClient } from 'with-http'
 
 import { USERS_CONTROLLER } from './config'
 
-class App extends Component {
+class App extends Component<{
+  classes: Object,
+  http: HttpClient,
+  isPending: boolean,
+  isError: boolean,
+  status: number,
+  statusText: string
+}, {
+  isError: boolean,
+  fullname: string,
+  items: Array<{id: string, name: string}>
+}> {
   state = {
     isError: false,
     fullname: '',
@@ -28,7 +40,7 @@ class App extends Component {
   }
 
   errorMessages = {
-    404: 'Record not found'
+    '404': 'Record not found'
   }
 
   componentDidMount = async () => {
@@ -59,7 +71,9 @@ class App extends Component {
     const items = [...this.state.items]
 
     const item = items.find(item => item.id === itemId)
-    item.name = value
+    if (item) {
+      item.name = value
+    }
 
     this.setState({ items })
   }
@@ -95,10 +109,12 @@ class App extends Component {
     const { items } = this.state
     const item = items.find(item => item.id === itemId)
 
-    await http.delete(`${USERS_CONTROLLER}/${item.id}`)
+    if (item) {
+      await http.delete(`${USERS_CONTROLLER}/${item.id}`)
 
-    const doc = await http.get(USERS_CONTROLLER)
-    this.setState({ items: doc.data })
+      const doc = await http.get(USERS_CONTROLLER)
+      this.setState({ items: doc.data })
+    }
   }
 
   handleClose = () => {
