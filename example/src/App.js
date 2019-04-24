@@ -107,13 +107,12 @@ class App extends Component<{
     const { http } = this.props
     const { items } = this.state
     const item = items.find(item => item.id === itemId)
+    const id = item ? item.id : -1
 
-    if (item) {
-      await http.delete(`${USERS_CONTROLLER}/${item.id}`)
+    await http.delete(`${USERS_CONTROLLER}/${id}`)
 
-      const doc = await http.get(USERS_CONTROLLER)
-      this.setState({ items: doc.data })
-    }
+    const doc = await http.get(USERS_CONTROLLER)
+    this.setState({ items: doc.data })
   }
 
   handleClose = () => {
