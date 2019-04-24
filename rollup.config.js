@@ -6,6 +6,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import url from 'rollup-plugin-url'
 import json from 'rollup-plugin-json'
 import svgr from '@svgr/rollup'
+import copy from 'rollup-plugin-cpy'
 
 import pkg from './package.json'
 
@@ -36,6 +37,10 @@ export default {
     }),
     resolve({ jsnext: true, preferBuiltins: true, browser: true }),
     commonjs(),
-    json()
+    json(),
+    copy({
+      files: ['src/*.flow'],
+      dest: 'dist'
+    })
   ]
 }
