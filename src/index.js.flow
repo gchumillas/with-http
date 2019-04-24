@@ -1,14 +1,20 @@
 // @flow
-import type { $AxiosXHR } from 'axios'
 
 declare module 'with-http' {
+  declare export type XHR<Response> = {
+      data: Response;
+      headers?: Object;
+      status: number;
+      statusText: string;
+  }
+
   declare export interface HttpClient {
-    request<T>(config: {}): Promise<$AxiosXHR<T>>;
-    get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
-    post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
-    put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
-    patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
-    delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
+    request<Response>(config: {}): Promise<XHR<Response>>;
+    get<Response>(url: string, config?: {}): Promise<XHR<Response>>;
+    post<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
+    put<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
+    patch<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
+    delete<Response>(url: string, config?: {}): Promise<XHR<Response>>;
   }
 
   declare type DefaultProps = {

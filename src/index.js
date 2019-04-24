@@ -1,18 +1,25 @@
 // @flow
 import React from 'react'
-import axios, { type $AxiosXHR } from 'axios'
+import axios from 'axios'
 import 'regenerator-runtime/runtime'
 
 const HTTP_SUCCESS = { status: 200, statusText: '' }
 const HTTP_SERVER_ERROR = { status: 500, statusText: 'Internal Server Error' }
 
+export type XHR<Response> = {
+    data: Response;
+    headers?: Object;
+    status: number;
+    statusText: string;
+}
+
 export interface HttpClient {
-  request<T>(config: {}): Promise<$AxiosXHR<T>>;
-  get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
-  post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
-  put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
-  patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
-  delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
+  request<Response>(config: {}): Promise<XHR<Response>>;
+  get<Response>(url: string, config?: {}): Promise<XHR<Response>>;
+  post<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
+  put<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
+  patch<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
+  delete<Response>(url: string, config?: {}): Promise<XHR<Response>>;
 }
 
 type DefaultProps = {
@@ -52,27 +59,27 @@ export default function withHttp<Props: {}>(
       )
     }
 
-    request<T>(config: {}): Promise<$AxiosXHR<T>> {
+    request<Response>(config: {}): Promise<XHR<Response>> {
       return this._send(axios, config)
     }
 
-    get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
+    get<Response>(url: string, config?: {}): Promise<XHR<Response>> {
       return this._send(axios.get, url, config)
     }
 
-    post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
+    post<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>> {
       return this._send(axios.post, url, data, config)
     }
 
-    put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
+    put<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>> {
       return this._send(axios.put, url, data, config)
     }
 
-    patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>> {
+    patch<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>> {
       return this._send(axios.patch, url, data, config)
     }
 
-    delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>> {
+    delete<Response>(url: string, config?: {}): Promise<XHR<Response>> {
       return this._send(axios.delete, url, config)
     }
 
