@@ -1,0 +1,25 @@
+// @flow
+import type { $AxiosXHR } from 'axios'
+
+declare module 'with-http' {
+  declare export interface HttpClient {
+    request<T>(config: {}): Promise<$AxiosXHR<T>>;
+    get<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
+    post<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
+    put<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
+    patch<T>(url: string, data?: mixed, config?: {}): Promise<$AxiosXHR<T>>;
+    delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
+  }
+
+  declare type DefaultProps = {
+    http: HttpClient | void,
+    isPending: boolean | void,
+    isError: boolean | void,
+    status: number | void,
+    statusText: string | void
+  }
+
+  declare export default function withHttp<Props: {}>(
+    Component: React$ComponentType<$Diff<Props, DefaultProps>>
+  ): React$ComponentType<$Diff<Props, DefaultProps>>
+}

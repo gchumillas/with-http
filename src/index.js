@@ -15,8 +15,18 @@ export interface HttpClient {
   delete<T>(url: string, config?: {}): Promise<$AxiosXHR<T>>;
 }
 
-export default function withHttp<P>(Component: React$ComponentType<P>) {
-  return class extends React.Component<P, {
+type DefaultProps = {
+  http: HttpClient | void,
+  isPending: boolean | void,
+  isError: boolean | void,
+  status: number | void,
+  statusText: string | void
+}
+
+export default function withHttp<Props: {}>(
+  Component: React$ComponentType<Props>
+): React$ComponentType<$Diff<Props, DefaultProps>> {
+  return class extends React.Component<$Diff<Props, DefaultProps>, {
     isPending: boolean,
     isError: boolean,
     status: number,
