@@ -4,17 +4,16 @@
 
 [![NPM](https://img.shields.io/npm/v/with-http.svg)](https://www.npmjs.com/package/with-http) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-A [HOC](https://reactjs.org/docs/higher-order-components.html) component to know the status of any asynchronous HTTP request, from when it's emitted ( `isPending` ) until it's received ( `isError`, `status`, `statusText` ). This way we can update the interface according to the state of the request.
+A [HOC](https://reactjs.org/docs/higher-order-components.html) component to know the status of any asynchronous HTTP request, from when it's emitted ( `isPending` ) until it's received ( `isError`, `status`, `statusMessage` ). This way we can update the interface according to the state of the request.
 
 For example, we may want to disable some buttons while the request is pending. Or perhaps we want to display an modal dialog message if the request has failed.
 
-The component injects the following properties:
+The component injects an `http` interface, which contains the following properties:
 
-  1. `http`: An HTTP client
-  2. `isPending`: is the server's response pending?
-  3. `isError`: has the request failed?
-  4. `status`: HTTP status code
-  5. `statusText`: HTTP status text
+  1. `http.isPending`: is the server's response pending?
+  2. `http.isError`: has the request failed?
+  3. `http.statusCode`: A number representing the HTTP status code
+  4. `http.statusMessage`: A string representing the HTTP status message
 
 ## Motivation
 
@@ -27,8 +26,8 @@ try {
   this.setSate({ data: doc.data })
 } catch (err) {
   const response = err.response
-  const { status, statusText } = response
-  this.setState( { isError: true, status, statusText })
+  const { statusCode, statusMessage } = response
+  this.setState( { isError: true, statusCode, statusMessage })
 } finally {
   this.setState({ isPending: false })
 }
@@ -77,7 +76,7 @@ class Example extends React.Component {
   }
 
   render () {
-    const { isPending, isError, status, statusText } = this.props
+    const { http } = this.props
     const { username, password } = this.state
 
     return (
@@ -87,9 +86,9 @@ class Example extends React.Component {
         <input type='password'
           value={password} onChange={this.handleInputChange('password')} />
         <input type='button'
-          value='Login' disabled={isPending} onClick={this.handleSubmit} />
-        <p hidden={!isError}>
-          Error {status}: {statusText}
+          value='Login' disabled={http.isPending} onClick={this.handleSubmit} />
+        <p hidden={!http.isError}>
+          Error {http.statusCode}: {http.statusMessage}
         </p>
       </div>
     )
