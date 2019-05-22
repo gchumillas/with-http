@@ -109,8 +109,9 @@ The example uses [json-server](https://github.com/typicode/json-server) to displ
 # install json-server globally
 yarn global add json-server
 
-# change to the example directory and start the server
+# change to example, install packages and start the server
 cd example
+yarn install
 yarn start-server
 
 # and finally start the example
