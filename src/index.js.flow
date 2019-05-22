@@ -22,11 +22,7 @@ declare module 'with-http' {
   }
 
   declare type DefaultProps = {
-    http: HttpClient | void,
-    isPending: boolean | void,
-    isError: boolean | void,
-    statusCode: number | void,
-    statusMessage: string | void
+    http: HttpClient | void
   }
 
   declare export default function withHttp<Props: {}>(
