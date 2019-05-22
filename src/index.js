@@ -58,7 +58,7 @@ export default function withHttp<Props: {}>(
     get statusCode() {
       return this.state.statusCode
     }
-    
+
     get statusMessage() {
       return this.state.statusMessage
     }
