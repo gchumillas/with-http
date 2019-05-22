@@ -4,11 +4,15 @@ declare module 'with-http' {
   declare export type XHR<Response> = {
       data: Response;
       headers?: Object;
-      status: number;
-      statusText: string;
+      statusCode: number;
+      statusMessage: string;
   }
 
   declare export interface HttpClient {
+    +isPending: boolean;
+    +isError: boolean;
+    +statusCode: number;
+    +statusMessage: string;
     request<Response>(config: {}): Promise<XHR<Response>>;
     get<Response>(url: string, config?: {}): Promise<XHR<Response>>;
     post<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
@@ -21,8 +25,8 @@ declare module 'with-http' {
     http: HttpClient | void,
     isPending: boolean | void,
     isError: boolean | void,
-    status: number | void,
-    statusText: string | void
+    statusCode: number | void,
+    statusMessage: string | void
   }
 
   declare export default function withHttp<Props: {}>(

@@ -22,11 +22,7 @@ import { USERS_CONTROLLER } from './config'
 
 class App extends Component<{
   classes: Object,
-  http: HttpClient,
-  isPending: boolean,
-  isError: boolean,
-  status: number,
-  statusText: string
+  http: HttpClient
 }, {
   isError: boolean,
   fullname: string,
@@ -50,10 +46,10 @@ class App extends Component<{
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    const { isError } = this.props
+    const { http } = this.props
 
-    if (prevProps.isError !== isError) {
-      this.setState({ isError })
+    if (http.isError !== prevState.isError) {
+      this.setState({ isError: http.isError })
     }
   }
 
@@ -120,9 +116,9 @@ class App extends Component<{
   }
 
   render () {
-    const { classes, isPending, status, statusText } = this.props
+    const { classes, http } = this.props
     const { fullname, items, isError } = this.state
-    const errorMsg = this.errorMessages[status] || statusText
+    const errorMsg = this.errorMessages[http.statusCode] || http.statusMessage
 
     return (
       <div className={classes.container}>
@@ -142,7 +138,7 @@ class App extends Component<{
                   onChange={this.handleFullnameChange} />
               </TableCell>
               <TableCell className={classes.lastColumn}>
-                <IconButton disabled={isPending} onClick={this.handleAdd}>
+                <IconButton disabled={http.isPending} onClick={this.handleAdd}>
                   <AddCircle />
                 </IconButton>
               </TableCell>
@@ -152,10 +148,10 @@ class App extends Component<{
                 <TextField value={'I\'M A FAKE ROW !!!'} />
               </TableCell>
               <TableCell className={classes.lastColumn}>
-                <IconButton disabled={isPending} onClick={this.handleSave(-1)}>
+                <IconButton disabled={http.isPending} onClick={this.handleSave(-1)}>
                   <Save style={{ color: 'brown' }} />
                 </IconButton>
-                <IconButton disabled={isPending} onClick={this.handleDelete(-1)}>
+                <IconButton disabled={http.isPending} onClick={this.handleDelete(-1)}>
                   <Delete style={{ color: 'brown' }} />
                 </IconButton>
               </TableCell>
@@ -167,10 +163,10 @@ class App extends Component<{
                     <TextField value={item.name} onChange={this.handleInputChange(item.id)} />
                   </TableCell>
                   <TableCell className={classes.lastColumn}>
-                    <IconButton disabled={isPending} onClick={this.handleSave(item.id)}>
+                    <IconButton disabled={http.isPending} onClick={this.handleSave(item.id)}>
                       <Save />
                     </IconButton>
-                    <IconButton disabled={isPending} onClick={this.handleDelete(item.id)}>
+                    <IconButton disabled={http.isPending} onClick={this.handleDelete(item.id)}>
                       <Delete />
                     </IconButton>
                   </TableCell>
@@ -179,7 +175,7 @@ class App extends Component<{
             })}
           </TableBody>
           <Dialog open={isError} onClose={this.handleClose}>
-            <DialogTitle>{`Error ${status}`}</DialogTitle>
+            <DialogTitle>{`Error ${http.statusCode}`}</DialogTitle>
             <DialogContent>
               <DialogContentText>
                 {errorMsg}

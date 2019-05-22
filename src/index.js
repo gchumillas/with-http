@@ -3,17 +3,21 @@ import React from 'react'
 import axios from 'axios'
 import 'regenerator-runtime/runtime'
 
-const HTTP_SUCCESS = { status: 200, statusText: '' }
-const HTTP_SERVER_ERROR = { status: 500, statusText: 'Internal Server Error' }
+const HTTP_SUCCESS = { statusCode: 200, statusMessage: '' }
+const HTTP_SERVER_ERROR = { statusCode: 500, statusMessage: 'Internal Server Error' }
 
 export type XHR<Response> = {
     data: Response;
     headers?: Object;
-    status: number;
-    statusText: string;
+    statusCode: number;
+    statusMessage: string;
 }
 
 export interface HttpClient {
+  +isPending: boolean;
+  +isError: boolean;
+  +statusCode: number;
+  +statusMessage: string;
   request<Response>(config: {}): Promise<XHR<Response>>;
   get<Response>(url: string, config?: {}): Promise<XHR<Response>>;
   post<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
@@ -23,11 +27,7 @@ export interface HttpClient {
 }
 
 type DefaultProps = {
-  http: HttpClient | void,
-  isPending: boolean | void,
-  isError: boolean | void,
-  status: number | void,
-  statusText: string | void
+  http: HttpClient | void
 }
 
 export default function withHttp<Props: {}>(
@@ -36,8 +36,8 @@ export default function withHttp<Props: {}>(
   return class extends React.Component<$Diff<Props, DefaultProps>, {
     isPending: boolean,
     isError: boolean,
-    status: number,
-    statusText: string
+    statusCode: number,
+    statusMessage: string
   }> implements HttpClient {
     state = {
       isPending: false,
@@ -45,18 +45,22 @@ export default function withHttp<Props: {}>(
       ...HTTP_SUCCESS
     }
 
-    render() {
-      const { isPending, isError, status, statusText } = this.state
+    render= () => <Component http={this} {...this.props} />
 
-      return (
-        <Component
-          http={this}
-          isPending={isPending}
-          isError={isError}
-          status={status}
-          statusText={statusText}
-          {...this.props} />
-      )
+    get isPending() {
+      return this.state.isPending
+    }
+
+    get isError() {
+      return this.state.isError
+    }
+
+    get statusCode() {
+      return this.state.statusCode
+    }
+    
+    get statusMessage() {
+      return this.state.statusMessage
     }
 
     request<Response>(config: {}): Promise<XHR<Response>> {
@@ -89,9 +93,9 @@ export default function withHttp<Props: {}>(
         return await method(...params)
       } catch (err) {
         const response = err.response
-        const { status, statusText } = response || HTTP_SERVER_ERROR
+        const { status: statusCode, statusText: statusMessage } = response || HTTP_SERVER_ERROR
 
-        this.setState({ isError: true, status, statusText })
+        this.setState({ isError: true, statusCode, statusMessage })
         throw response
       } finally {
         this.setState({ isPending: false })
