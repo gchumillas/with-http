@@ -14,14 +14,15 @@ The component injects an `http` object, which contains the following properties 
   2. `isError`: checks if the server responded with an HTTP error.
   3. `statusCode`: A number representing the HTTP status code.
   4. `statusMessage`: A string representing the HTTP status message
-  5. `request(config)`: Sends a generic request.
-  6. `get(url, config?)`: Sends a GET request.
-  7. `put(url, data?, config?)`: Sends a POST request.
-  8. `patch(url, data?, config?)`: Sends a PATCH request.
-  9. `put(url, data?, config?)`: Sends a PUT request.
-  10. `delete(url, config?)`: Sends a DELETE request.
+  5. `reset`: Resets the status of the instance.
+  6. `request(config)`: Sends a generic request.
+  7. `get(url, config?)`: Sends a GET request.
+  8. `put(url, data?, config?)`: Sends a POST request.
+  9. `patch(url, data?, config?)`: Sends a PATCH request.
+  10. `put(url, data?, config?)`: Sends a PUT request.
+  11. `delete(url, config?)`: Sends a DELETE request.
 
-The previous methods work in the same way as the axios methods does. Consult the [axios documentation](https://github.com/axios/axios) for more details.
+The methods `request`, `get`, `put`, `patch`, `put` and  `delete` work in the same way as the axios methods does. Consult the [axios documentation](https://github.com/axios/axios) for more details.
 
 ## Motivation
 

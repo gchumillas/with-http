@@ -13,6 +13,7 @@ declare module 'with-http' {
     +isError: boolean;
     +statusCode: number;
     +statusMessage: string;
+    reset(): void;
     request<Response>(config: {}): Promise<XHR<Response>>;
     get<Response>(url: string, config?: {}): Promise<XHR<Response>>;
     post<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;

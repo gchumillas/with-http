@@ -18,6 +18,7 @@ export interface HttpClient {
   +isError: boolean;
   +statusCode: number;
   +statusMessage: string;
+  reset(): void;
   request<Response>(config: {}): Promise<XHR<Response>>;
   get<Response>(url: string, config?: {}): Promise<XHR<Response>>;
   post<Response>(url: string, data?: mixed, config?: {}): Promise<XHR<Response>>;
@@ -85,6 +86,14 @@ export default function withHttp<Props: {}>(
 
     delete<Response>(url: string, config?: {}): Promise<XHR<Response>> {
       return this._send(axios.delete, url, config)
+    }
+
+    reset() {
+      this.setState({
+        isPending: false,
+        isError: false,
+        ...HTTP_SUCCESS
+      })
     }
 
     async _send(method: (...params: any) => any, ...params: any) {
