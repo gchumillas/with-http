@@ -6,7 +6,7 @@
 
 A [HOC](https://reactjs.org/docs/higher-order-components.html) component to know the status of any asynchronous HTTP request, from when it's emitted ( `isPending` ) until it's received ( `isError`, `statusCode`, `statusMessage` ). This way we can update the interface according to the state of the request.
 
-For example, we may want to disable some buttons while the request is pending. Or perhaps we want to display an modal dialog message if the request has failed.
+For example, we may want to disable some buttons while the request is pending. Or perhaps we want to display a modal dialog message if the request has failed.
 
 The component injects an `http` object, which contains the following properties and methods:
 
@@ -26,7 +26,7 @@ The methods `request`, `get`, `put`, `patch`, `put` and  `delete` work in the sa
 
 ## Motivation
 
-Traditionally if we want to know the status of an asynchronous HTTP request, we can write something like this:
+Traditionally if we want to respond to the status of an asynchronous HTTP request, we can write something like this:
 
 ```JavaScript
 this.setState({ isPending: true, isError: false })
